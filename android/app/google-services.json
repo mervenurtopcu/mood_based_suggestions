@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "801900444436",
+    "project_id": "suggestions-by-mode",
+    "storage_bucket": "suggestions-by-mode.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:801900444436:android:6af01ae39bf5f1dd202001",
+        "android_client_info": {
+          "package_name": "com.mervenurtopcu.suggestions_by_mode"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "801900444436-i256i1s9b8bmmv69jp9e2rmfmv112r06.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCypDvzWFPunQ0u2SucntYV2q3cAfCPyOs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "801900444436-i256i1s9b8bmmv69jp9e2rmfmv112r06.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
