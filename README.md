@@ -1,4 +1,4 @@
-# mood_based_auggestion
+# mood_based_suggestion
 
 A new Flutter project.
 
