@@ -3,7 +3,8 @@
    <application
         android:label="suggestions_by_mode"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+       android:roundIcon="@mipmap/ic_logo_mood_rounded"
+        android:icon="@mipmap/ic_logo_mood">
         <activity
             android:name=".MainActivity"
             android:exported="true"

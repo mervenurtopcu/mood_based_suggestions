@@ -25,8 +25,8 @@ class MyApp extends ConsumerWidget {
     return MaterialApp(
       title: StringConstants.materialAppTitle,
       debugShowCheckedModeBanner: false,
-       theme: ref.watch(settingsProvider).isDarkTheme ? DarkTheme.darkTheme :LightTheme.lightTheme,
-      home:const BottomNavBar(),
+      theme: ref.watch(settingsProvider).isDarkTheme ? DarkTheme.darkTheme :LightTheme.lightTheme,
+      home: const BottomNavBar(),
     );
   }
 }

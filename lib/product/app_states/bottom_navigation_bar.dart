@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import 'package:mood_based_suggestions/features/category/category_screen.dart';
+import 'package:mood_based_suggestions/features/home/home_screen.dart';
+import 'package:mood_based_suggestions/features/profile/profile_screen.dart';
+import 'package:mood_based_suggestions/product/constants/index.dart';
+import 'package:mood_based_suggestions/product/theme/index.dart';
+import '../../features/saved_list/saved_list_screen.dart';
+import 'drawer_menu.dart';
+import 'drawer_provider.dart';
 import 'navigation_provider.dart';
 
 class BottomNavBar extends ConsumerStatefulWidget {
@@ -14,48 +21,65 @@ class BottomNavBar extends ConsumerStatefulWidget {
 
 class _BottomNavBarState extends ConsumerState<BottomNavBar> {
   static final List<Widget> _widgetOptions = <Widget>[
-    //TODO: Add Screens
+    const HomeScreen(),
+    const CategoryScreen(),
+    const SavedListScreen(),
+    const ProfileScreen(),
   ];
   @override
   Widget build(BuildContext context) {
     var navIndex = ref.watch(navProvider);
     return Scaffold(
-      body: Center(
-        child: navIndex.isLoading
-            ? const CircularProgressIndicator()
-            : _widgetOptions[navIndex.index],
+      appBar: AppBar(
+        title: const Text(StringConstants.drawerHeader),
+        leading: IconButton(
+          icon: ref.watch(settingsProvider).isDarkTheme
+              ? const Icon(
+                  Icons.menu,
+                  color: ColorConstants.white,
+                )
+              : const Icon(
+                  Icons.menu,
+                  color: ColorConstants.black,
+                ),
+          onPressed: ref.read(menuAppController).controlMenu,
+        ),
       ),
-      bottomNavigationBar: SizedBox(
-        height: 100,
-        child: Column(
+      key: ref.watch(menuAppController).scaffoldKey,
+      drawer: const SideMenu(),
+      body: SafeArea(
+        child: Row(
           children: [
-            const Spacer(
-              flex: 1,
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: BottomNavigationBar(
-                currentIndex: navIndex.index,
-                onTap: (index) {
-                  ref.read(navProvider.notifier).updateIndex(index);
-                },
-                items: const [
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.home), label: 'Home'),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.category), label: 'Category'),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.favorite_outlined), label: 'Favorite'),
-                  BottomNavigationBarItem(
-                      icon: Icon(Icons.person), label: 'Profile'),
-                ],
+            Expanded(
+              flex: 5,
+              child: Center(
+                child: navIndex.isLoading
+                    ? const CircularProgressIndicator()
+                    : _widgetOptions[navIndex.index],
               ),
             ),
-            const Spacer(
-              flex: 1,
-            )
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: navIndex.index,
+        onTap: (index) {
+          ref.read(navProvider.notifier).updateIndex(index);
+        },
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: StringConstants.bottomNavBarHome),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.category),
+              label: StringConstants.bottomNavBarCategory),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite_outlined),
+              label: StringConstants.bottomNavBarFavorites),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: StringConstants.bottomNavBarProfile),
+        ],
       ),
     );
   }
