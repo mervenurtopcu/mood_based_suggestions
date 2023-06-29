@@ -1,11 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mood_based_suggestions/features/authenticate/login/login_screen.dart';
 import 'package:mood_based_suggestions/product/app_states/index.dart';
 import 'package:mood_based_suggestions/product/constants/index.dart';
 import 'package:mood_based_suggestions/product/services/shared_manager.dart';
 import 'package:mood_based_suggestions/product/theme/index.dart';
 
+import 'features/authenticate/register/register_screen.dart';
 import 'firebase_options.dart';
 
 void main() async{
@@ -28,7 +30,7 @@ class MyApp extends ConsumerWidget {
       title: StringConstants.materialAppTitle,
       debugShowCheckedModeBanner: false,
       theme: ref.watch(settingsProvider).isDarkTheme ? DarkTheme.darkTheme :LightTheme.lightTheme,
-      home: const BottomNavBar(),
+      home:  const LoginScreen(),
     );
   }
 }
