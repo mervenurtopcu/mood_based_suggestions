@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mood_based_suggestions/product/app_states/index.dart';
 import 'package:mood_based_suggestions/product/constants/index.dart';
+import 'package:mood_based_suggestions/product/services/shared_manager.dart';
 import 'package:mood_based_suggestions/product/theme/index.dart';
 
 import 'firebase_options.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  await SharedManager.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
