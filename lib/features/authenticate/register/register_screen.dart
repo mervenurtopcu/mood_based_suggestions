@@ -35,7 +35,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             ),),
             const Expanded(flex:1,child: Center(
               child: AuthSubtitle(
-                text: StringConstants.registerScreenTitle,
+                text: StringConstants.registerScreenSubtitle,
               ),
             ),),
             Expanded(flex: 1,child: Padding(
@@ -69,12 +69,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(StringConstants.registerScreenLoginText,style: TextStyle(color: ref.watch(settingsProvider).isDarkTheme?ColorConstants.white:ColorConstants.loginSubtitle,fontSize: 14,fontWeight: FontWeight.w300),),
+                  Text(StringConstants.registerScreenLoginText,style: TextStyle(color: ref.watch(settingsProvider).isDarkTheme?ColorConstants.loginSubtitle:ColorConstants.loginSubtitle,fontSize: 14,fontWeight: FontWeight.w300),),
                   TextButton(
                     onPressed: (){
                       Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const LoginScreen()));
                     },
-                    child: Text(StringConstants.registerScreenLoginTextButton,style: TextStyle(color: ref.watch(settingsProvider).isDarkTheme?Colors.white:ColorConstants.loginLightButton,fontSize: 14,fontWeight: FontWeight.w400),),
+                    child: Text(StringConstants.registerScreenLoginTextButton,style: TextStyle(color: ref.watch(settingsProvider).isDarkTheme?ColorConstants.loginTextFieldFocus:ColorConstants.loginLightButton,fontSize: 14,fontWeight: FontWeight.w400),),
                   ),
                 ],
               ),
