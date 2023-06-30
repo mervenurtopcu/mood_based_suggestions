@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mood_based_suggestions/product/app_states/index.dart';
-import '../../features/authenticate/login/login_screen_provider.dart';
 import '../constants/index.dart';
 import '../theme/theme_provider.dart';
 

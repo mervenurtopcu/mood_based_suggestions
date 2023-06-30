@@ -3,8 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
-import 'package:mood_based_suggestions/features/authenticate/login/login_screen.dart';
-import 'package:mood_based_suggestions/features/authenticate/register/register_screen_provider.dart';
 import 'package:mood_based_suggestions/product/constants/index.dart';
 import 'package:mood_based_suggestions/product/theme/index.dart';
 import 'package:mood_based_suggestions/product/widget/text/authentication_subtitle.dart';
@@ -13,7 +11,7 @@ import 'package:mood_based_suggestions/product/widget/text_form_field/authentica
 import '../../../main.dart';
 import '../../../product/global/utils.dart';
 import '../../../product/widget/button/authentication_button.dart';
-import '../../../product/widget/text_field/authentication_text_field.dart';
+
 
 class RegisterScreen extends ConsumerStatefulWidget {
   final Function() onClickedSignIn;
