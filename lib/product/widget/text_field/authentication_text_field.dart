@@ -8,17 +8,19 @@ class AuthTextField extends ConsumerWidget {
       required this.icon,
       required this.labelText,
       required this.isDarkTheme,
-      required this.obscureText});
+      required this.obscureText,required this.controller});
   final Icon icon;
   final String labelText;
   final bool isDarkTheme;
   final bool obscureText;
+  final TextEditingController controller ;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return isDarkTheme == false
         ?
     TextField(
+      controller: controller,
       textInputAction: TextInputAction.next,
       obscureText: obscureText,
       style: const TextStyle(color: ColorConstants.black),
@@ -50,6 +52,7 @@ class AuthTextField extends ConsumerWidget {
       ),
     )
         : TextField(
+            controller: controller,
             textInputAction: TextInputAction.next,
             obscureText: obscureText,
             style: const TextStyle(color: ColorConstants.white),

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mood_based_suggestions/features/authenticate/login/login_screen.dart';
 import 'package:mood_based_suggestions/product/app_states/index.dart';
 import 'package:mood_based_suggestions/product/constants/index.dart';
+import 'package:mood_based_suggestions/product/global/utils.dart';
 import 'package:mood_based_suggestions/product/services/shared_manager.dart';
 import 'package:mood_based_suggestions/product/theme/index.dart';
 
@@ -18,7 +19,7 @@ void main() async{
   );
   runApp(const ProviderScope(child: MyApp()));
 }
-
+final navigatorKey = GlobalKey<NavigatorState>();
 class MyApp extends ConsumerWidget {
   const MyApp({
     Key? key,
@@ -27,8 +28,10 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
+      scaffoldMessengerKey: Utils.messengerKey,
       title: StringConstants.materialAppTitle,
       debugShowCheckedModeBanner: false,
+      navigatorKey: navigatorKey,
       theme: ref.watch(settingsProvider).isDarkTheme ? DarkTheme.darkTheme :LightTheme.lightTheme,
       home:  const LoginScreen(),
     );

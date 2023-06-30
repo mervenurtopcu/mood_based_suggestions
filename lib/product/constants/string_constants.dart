@@ -31,11 +31,15 @@ class StringConstants {
  //Register Screen
   static const String registerScreenTitle = 'Let\'s Get Started!';
   static const String registerScreenSubtitle = 'Create an account to MoodyWise to get all features';
-  static const String registerScreenName = 'NAME';
   static const String registerScreenEmail = 'EMAIL';
   static const String registerScreenPassword = 'PASSWORD';
-  static const String registerScreenConfirmPassword = 'CONFIRM PASSWORD';
   static const String registerScreenSignUpButton = 'SIGN UP';
   static const String registerScreenLoginText = 'Already have an account?';
   static const String registerScreenLoginTextButton = 'Login';
+
+  //Forgot Password Screen
+  static const String forgotPasswordScreenTitle = 'Reset\nPassword';
+  static const String forgotPasswordScreenSubtitle = 'Please enter your email address to request a password reset.';
+  static const String forgotPasswordScreenButton = 'Reset Password';
+  static const String utilsSnackBarText = 'Password reset link has been sent to your email';
 }
