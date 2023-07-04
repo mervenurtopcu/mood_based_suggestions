@@ -24,15 +24,13 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: ref.watch(settingsProvider).isDarkTheme
             ? ColorConstants.loginBackground
             : ColorConstants.loginLightBackground,
-        resizeToAvoidBottomInset: true,
+        resizeToAvoidBottomInset: false,
         body: StreamBuilder<User?>(
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
@@ -44,7 +42,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       : ColorConstants.black,
                 ));
               } else if (snapshot.hasError) {
-                return const Center(child: Text('Something went wrong'));
+                return const Center(
+                    child: Text(StringConstants.errorLoginScreen));
               } else if (snapshot.hasData) {
                 return const VerifyEmailScreen();
               } else {
@@ -81,17 +80,18 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
-              flex: 4,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: Center(
-                    child: Lottie.asset(
-                      LottieItems.login.lottiePath,
-                      width: 200,
-                      height: 200,
-                      fit: BoxFit.fill,
-                    )),
-              )), //Lottie
+            flex: 4,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: Center(
+                  child: Lottie.asset(
+                LottieItems.login.lottiePath,
+                height: MediaQuery.of(context).size.height * 0.3,
+                width: MediaQuery.of(context).size.width * 0.6,
+                fit: BoxFit.fill,
+              )),
+            ),
+          ), //Lottie
           Expanded(
             flex: 1,
             child: Center(
@@ -100,109 +100,124 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                   isDarkTheme: ref.watch(settingsProvider).isDarkTheme),
             ),
           ), //Title
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.02,
+          ),
           const Expanded(
             flex: 1,
             child: Center(
               child: AuthSubtitle(text: StringConstants.loginScreenSubtitle),
             ),
           ), //Subtitle
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.05,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: AuthTextField(
-                controller: emailController,
-                icon: const Icon(Icons.person_outline_outlined),
-                labelText: StringConstants.loginScreenEmail,
-                isDarkTheme: ref.watch(settingsProvider).isDarkTheme,
-                obscureText: false),
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: AuthTextField(
+                  controller: emailController,
+                  icon: const Icon(Icons.person_outline_outlined),
+                  labelText: StringConstants.loginScreenEmail,
+                  isDarkTheme: ref.watch(settingsProvider).isDarkTheme,
+                  obscureText: false),
+            ),
           ), //Email
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.03,
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: AuthTextField(
-              controller: passwordController,
-              icon: const Icon(Icons.lock_open_outlined),
-              labelText: StringConstants.loginScreenPassword,
-              isDarkTheme: ref.watch(settingsProvider).isDarkTheme,
-              obscureText: true,
+          Expanded(
+            flex: 1,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: AuthTextField(
+                controller: passwordController,
+                icon: const Icon(Icons.lock_open_outlined),
+                labelText: StringConstants.loginScreenPassword,
+                isDarkTheme: ref.watch(settingsProvider).isDarkTheme,
+                obscureText: true,
+              ),
             ),
           ), //Password
-          const SizedBox(
-            height: 25,
-          ),
-          Center(
-            child: AuthButton(
-              onPressed: signIn,
-              isDarkTheme: ref.watch(settingsProvider).isDarkTheme,
-              text: StringConstants.loginScreenLoginButton,
-            ),
-          ), //
           Expanded(
-              flex: 1,
+            flex: 1,
+            child: Align(
+              alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const ForgotPasswordScreen()));
                 },
-                child: Text(
+                child: const Text(
                   StringConstants.loginScreenForgetPassword,
                   style: TextStyle(
-                      color: ref.watch(settingsProvider).isDarkTheme
-                          ? ColorConstants.loginTextFieldFocus
-                          : ColorConstants.loginLightButton,
+                      color: ColorConstants.loginSubtitle,
                       fontSize: 14,
                       fontWeight: FontWeight.w400),
                 ),
-              )),
-          RichText(text: TextSpan(
-              style: TextStyle(color: ref.watch(settingsProvider).isDarkTheme
-                  ? ColorConstants.loginTextFieldFocus
-                  : ColorConstants.loginLightButton,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400),
-              text: 'Don\'t have an account? ',
-              children: [
-                TextSpan(
-                  text: 'Sign Up',
-                  style: TextStyle(color: ref.watch(settingsProvider).isDarkTheme
-                      ? ColorConstants.loginTextFieldFocus
-                      : ColorConstants.loginLightButton,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w400),
-                  recognizer: TapGestureRecognizer()..onTap = widget.onClickedSignUp,
-
-                )
-              ]
-          )),//ForgetPassword
-
+              ),
+            ),
+          ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.04,
+          ),
+          Expanded(
+            flex: 1,
+            child: Center(
+              child: AuthButton(
+                onPressed: signIn,
+                isDarkTheme: ref.watch(settingsProvider).isDarkTheme,
+                text: StringConstants.loginScreenLoginButton,
+              ),
+            ),
+          ), //
+          const Spacer(flex: 1),
+          Expanded(
+            flex: 1,
+            child: RichText(
+                text: TextSpan(
+                    style: const TextStyle(
+                        color: ColorConstants.loginSubtitle,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400),
+                    text: StringConstants.loginScreenSignUpText,
+                    children: [
+                  TextSpan(
+                    text: 'Sign Up',
+                    style: TextStyle(
+                        color: ref.watch(settingsProvider).isDarkTheme
+                            ? ColorConstants.loginTextFieldFocus
+                            : ColorConstants.loginLightButton,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = widget.onClickedSignUp,
+                  )
+                ])),
+          ), //ForgetPassword
         ],
       ),
     );
   }
-    Future signIn() async {
-      showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (context) => const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.white,
-                ),
-              ));
-      try {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: emailController.text.trim(),
-            password: passwordController.text.trim());
-      } on FirebaseAuthException catch (e) {
-        print(e);
-        Utils.showSnackBar( e.message);
-      }
-      navigatorKey.currentState!.popUntil((route) => route.isFirst);
+
+  Future signIn() async {
+    showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => const Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            ));
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim());
+    } on FirebaseAuthException catch (e) {
+      print(e);
+      Utils.showSnackBar(e.message);
     }
-
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
+  }
 }
-
-

@@ -3,7 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:mood_based_suggestions/product/app_states/bottom_navigation_bar.dart';
+import 'package:mood_based_suggestions/product/constants/index.dart';
+import 'package:mood_based_suggestions/product/theme/index.dart';
 
+import '../../../product/constants/color_constants.dart';
 import '../../../product/global/utils.dart';
 
 class VerifyEmailScreen extends ConsumerStatefulWidget {
@@ -61,29 +64,29 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
       ? const BottomNavBar()
       : Scaffold(
           appBar: AppBar(
-            title: const Text('Verify Email'),
+            title: const Text(StringConstants.emailVerificationScreenTitle),
           ),
           body: Padding(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  'An email has been sent to your email address please verify',
+                  StringConstants.emailVerificationScreenSubtitle,
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20),
                 ),
                 const SizedBox(height: 24),
                 ElevatedButton(
                   onPressed: canResendEmail ? sendVerifivationEmail : null,
-                  child: const Text('Resent Email'),
+                  child: const Text(StringConstants.emailResentEmail),
                 ),
                 const SizedBox(height: 8),
                 TextButton(
                   onPressed: () => FirebaseAuth.instance.signOut(),
                   child: const Text(
-                    'Cancel',
-                    style: TextStyle(fontSize: 24),
+                    StringConstants.emailVerificationCancelButton,
+                    style: TextStyle(fontSize: 24 ),
                   ),
                 ),
               ],

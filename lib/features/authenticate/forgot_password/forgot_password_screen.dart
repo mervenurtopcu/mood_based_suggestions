@@ -6,12 +6,10 @@ import 'package:mood_based_suggestions/product/constants/index.dart';
 import 'package:mood_based_suggestions/product/widget/text/authentication_subtitle.dart';
 import 'package:mood_based_suggestions/product/widget/text/authentication_title.dart';
 import 'package:mood_based_suggestions/product/widget/text_form_field/authentication_text_form_field.dart';
-
 import '../../../main.dart';
 import '../../../product/global/utils.dart';
 import '../../../product/theme/theme_provider.dart';
 import '../../../product/widget/button/authentication_button.dart';
-
 
 class ForgotPasswordScreen extends ConsumerStatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -26,7 +24,6 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
     emailController.dispose();
   }
@@ -69,7 +66,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (email) =>
                       email != null && !EmailValidator.validate(email)
-                          ? 'Enter a valid email'
+                          ? StringConstants.registerScreenValidatorEmail
                           : null),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.05,
@@ -81,7 +78,20 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
                   onPressed: resetPassword,
                 ),
               ),
-
+              Center(
+                child: TextButton(
+                  child: Text(
+                    StringConstants.emailVerificationCancelButton,
+                    style: TextStyle(
+                        color: ref.watch(settingsProvider).isDarkTheme
+                            ? ColorConstants.white
+                            : ColorConstants.black),
+                  ),
+                  onPressed: () {
+                    navigatorKey.currentState!.pop();
+                  },
+                ),
+              )
             ],
           ),
         ),
@@ -89,24 +99,24 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
     );
   }
 
-  Future resetPassword() async{
+  Future resetPassword() async {
     showDialog(
         context: context,
         barrierDismissible: false,
         builder: (context) => const Center(
-          child: CircularProgressIndicator(
-            color: Colors.white,
-          ),
-        ));
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            ));
     try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text.trim());
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: emailController.text.trim());
       Utils.showSnackBar(StringConstants.utilsSnackBarText);
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     } on FirebaseAuthException catch (e) {
       debugPrint(e.toString());
-      Utils.showSnackBar( e.message);
+      Utils.showSnackBar(e.message);
       Navigator.of(context).pop();
     }
-
   }
 }

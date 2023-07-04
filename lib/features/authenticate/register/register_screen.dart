@@ -12,7 +12,6 @@ import '../../../main.dart';
 import '../../../product/global/utils.dart';
 import '../../../product/widget/button/authentication_button.dart';
 
-
 class RegisterScreen extends ConsumerStatefulWidget {
   final Function() onClickedSignIn;
   const RegisterScreen({super.key, required this.onClickedSignIn});
@@ -40,7 +39,6 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           ? ColorConstants.loginBackground
           : ColorConstants.loginLightBackground,
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Form(
@@ -48,6 +46,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Spacer(flex: 2),
               Expanded(
                 flex: 1,
                 child: Center(
@@ -57,6 +56,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   ),
                 ),
               ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.011,
+              ),
               const Expanded(
                 flex: 1,
                 child: Center(
@@ -65,39 +67,47 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: AuthTextFormField(
-                    icon: const Icon(Icons.email_outlined),
-                    labelText: StringConstants.registerScreenEmail,
-                    isDarkTheme: ref.watch(settingsProvider).isDarkTheme,
-                    obscureText: false,
-                    controller: emailController,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (email) =>
-                        email != null && !EmailValidator.validate(email)
-                            ? 'Enter a valid email'
-                            : null),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.03,
               ),
-              const SizedBox(
-                height: 30,
+              Expanded(
+                flex: 1,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: AuthTextFormField(
+                      icon: const Icon(Icons.email_outlined),
+                      labelText: StringConstants.registerScreenEmail,
+                      isDarkTheme: ref.watch(settingsProvider).isDarkTheme,
+                      obscureText: false,
+                      controller: emailController,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (email) =>
+                          email != null && !EmailValidator.validate(email)
+                              ? StringConstants.registerScreenValidatorEmail
+                              : null),
+                ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: AuthTextFormField(
-                    icon: const Icon(Icons.lock_open_outlined),
-                    labelText: StringConstants.registerScreenPassword,
-                    isDarkTheme: ref.watch(settingsProvider).isDarkTheme,
-                    obscureText: true,
-                    controller: passwordController,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) => value != null && value.length < 6
-                        ? 'Password must be at least 6 characters long'
-                        : null),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.03,
+              ),
+              Expanded(
+                flex: 1,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: AuthTextFormField(
+                      icon: const Icon(Icons.lock_open_outlined),
+                      labelText: StringConstants.registerScreenPassword,
+                      isDarkTheme: ref.watch(settingsProvider).isDarkTheme,
+                      obscureText: true,
+                      controller: passwordController,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) => value != null && value.length < 6
+                          ? StringConstants.registerScreenValidatorPassword
+                          : null),
+                ),
               ), //Password
-
-              const SizedBox(
-                height: 15,
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.03,
               ),
               Expanded(
                 flex: 1,
@@ -109,28 +119,30 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                   ),
                 ),
               ),
-              RichText(
-                  text: TextSpan(
-                      style: TextStyle(
-                          color: ref.watch(settingsProvider).isDarkTheme
-                              ? ColorConstants.loginTextFieldFocus
-                              : ColorConstants.loginLightButton,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400),
-                      text: 'Already have an account? ',
-                      children: [
-                    TextSpan(
-                      text: 'Log In',
-                      style: TextStyle(
-                          color: ref.watch(settingsProvider).isDarkTheme
-                              ? ColorConstants.loginTextFieldFocus
-                              : ColorConstants.loginLightButton,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = widget.onClickedSignIn,
-                    )
-                  ])),
+              const Spacer(flex: 1),
+              Expanded(
+                flex: 1,
+                child: RichText(
+                    text: TextSpan(
+                        style: const TextStyle(
+                            color: ColorConstants.loginSubtitle,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400),
+                        text: StringConstants.registerScreenLoginText,
+                        children: [
+                      TextSpan(
+                        text: 'Log In',
+                        style: TextStyle(
+                            color: ref.watch(settingsProvider).isDarkTheme
+                                ? ColorConstants.loginTextFieldFocus
+                                : ColorConstants.loginLightButton,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = widget.onClickedSignIn,
+                      )
+                    ])),
+              ),
             ],
           ),
         ),
@@ -153,10 +165,9 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim());
-    } on FirebaseAuthException
-    catch (e) {
+    } on FirebaseAuthException catch (e) {
       print(e.toString());
-      Utils.showSnackBar( e.message);
+      Utils.showSnackBar(e.message);
     }
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }

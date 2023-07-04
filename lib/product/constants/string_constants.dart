@@ -23,7 +23,7 @@ class StringConstants {
   static const String loginScreenSubtitle = 'Login to your existant account of MoodyWise';
   static const String loginScreenEmail = 'EMAIL';
   static const String loginScreenPassword = 'PASSWORD';
-  static const String loginScreenForgetPassword = 'Forget Password?';
+  static const String loginScreenForgetPassword = 'Forgot Password?';
   static const String loginScreenLoginButton = 'LOGIN';
   static const String loginScreenSignUpText = 'Don\'t have an account?';
   static const String loginScreenSignUpTextButton = 'Sign Up';
@@ -36,10 +36,21 @@ class StringConstants {
   static const String registerScreenSignUpButton = 'SIGN UP';
   static const String registerScreenLoginText = 'Already have an account?';
   static const String registerScreenLoginTextButton = 'Login';
+  static const String registerScreenValidatorEmail = 'Enter a valid email';
+  static const String registerScreenValidatorPassword= 'Password must be at least 6 characters long';
 
   //Forgot Password Screen
   static const String forgotPasswordScreenTitle = 'Reset\nPassword';
   static const String forgotPasswordScreenSubtitle = 'Please enter your email address to request a password reset.';
   static const String forgotPasswordScreenButton = 'Reset Password';
   static const String utilsSnackBarText = 'Password reset link has been sent to your email';
+
+  //Email Verification Screen
+  static const String emailVerificationScreenTitle = 'Verify Email';
+  static const String emailVerificationScreenSubtitle =  'An email has been sent to your email address please verify';
+ static const String emailResentEmail = 'Resent Email';
+ static const String emailVerificationCancelButton = 'Cancel';
+
+ //Error Messages
+  static const String errorLoginScreen = 'Something went wrong';
 }
