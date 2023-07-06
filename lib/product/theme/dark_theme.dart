@@ -20,7 +20,7 @@ class DarkTheme {
       ),
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: ColorConstants.transparent,
-        statusBarIconBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.light,
       ),
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(

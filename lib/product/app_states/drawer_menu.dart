@@ -79,6 +79,14 @@ class SideMenu extends ConsumerWidget {
               ],
            ),
          ),
+          SizedBox(height: MediaQuery.of(context).size.height * 0.4,),
+          const Divider(
+            color: ColorConstants.grey,
+            height: 1,
+            thickness: 1,
+            indent: 10,
+            endIndent: 10,
+          ),
           TextButton(onPressed: (){
             FirebaseAuth.instance.signOut();
             Navigator.pop(context);
