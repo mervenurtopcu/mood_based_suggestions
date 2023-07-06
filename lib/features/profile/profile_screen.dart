@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -7,12 +6,8 @@ import 'package:mood_based_suggestions/features/profile/profile_screen_provider.
 import 'package:mood_based_suggestions/product/constants/color_constants.dart';
 import 'package:mood_based_suggestions/product/theme/index.dart';
 import 'package:mood_based_suggestions/product/widget/button/authentication_button.dart';
-import 'package:mood_based_suggestions/product/widget/text/authentication_subtitle.dart';
-import 'package:mood_based_suggestions/product/widget/text/authentication_title.dart';
-import 'package:mood_based_suggestions/product/widget/text_field/authentication_text_field.dart';
 
-import '../../product/constants/padding_constants.dart';
-import '../../product/constants/string_constants.dart';
+
 
 class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
@@ -22,7 +17,6 @@ class ProfileScreen extends ConsumerStatefulWidget {
 }
 
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
-  late final  User? currentUser ;
   User? currentFirebaseUser = FirebaseAuth.instance.currentUser;
   late String _photoUrl;
 
@@ -30,7 +24,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    currentUser = ref.read(profileViewModel).user;
     _photoUrl = currentFirebaseUser?.photoURL ?? '';
   }
   @override
@@ -48,7 +41,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 13),
                   child: Center(
-                    child: ref.watch(profileViewModel).loading == false
+                    child: ref.watch(profileScreenProvider).loading == false
                         ? Container(
                       height: 130,
                       width: 130,
@@ -66,12 +59,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           color: Colors.grey,
                         ),
                       ),
-                      child: _photoUrl != null && ref.watch(profileViewModel).image == null
-                      //ref.watch(profileViewModel).image == null
+                      child: ref.watch(profileScreenProvider).image == null
+
                           ? ClipOval(
                         child: Image.network(
                           _photoUrl,
-                          //ref.watch(profileViewModel).imageUrl,
                           fit: BoxFit.cover,
                           errorBuilder:
                               (context, error, stackTrace) =>
@@ -84,7 +76,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           : ClipOval(
                         child: Image.file(
                           File(ref
-                              .watch(profileViewModel)
+                              .watch(profileScreenProvider)
                               .image!
                               .path),
                           fit: BoxFit.cover,
@@ -105,7 +97,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 ),
                 InkWell(
                   onTap: () {
-                    ref.read(profileViewModel).pickImage(context);
+                    ref.read(profileScreenProvider).pickImage(context);
                   },
                   child: const CircleAvatar(
                     radius: 14,
@@ -124,20 +116,18 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             ),
             TextButton(
               onPressed: () {
-                ref.read(profileViewModel).deleteProfilePhoto(context);
+                ref.read(profileScreenProvider).deleteProfilePhoto(context);
               },
               child: const Text('Delete Profile Photo',style: TextStyle(color: ColorConstants.loginSubtitle),),),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.02,
             ),
-            Text(currentUser?.email ?? '',style: TextStyle(color: ref.watch(settingsProvider).isDarkTheme ? ColorConstants.white : ColorConstants.black),),
-
+            Text(currentFirebaseUser?.email ?? '',style: TextStyle(color: ref.watch(settingsProvider).isDarkTheme ? ColorConstants.white : ColorConstants.black),),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.06,
             ),
             Center(child: AuthButton(onPressed: () {
               FirebaseAuth.instance.signOut();
-              Navigator.pop(context);
             }, text: ' Log Out', isDarkTheme: ref.watch(settingsProvider).isDarkTheme,),),
 
           ],

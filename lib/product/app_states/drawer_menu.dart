@@ -80,7 +80,6 @@ class SideMenu extends ConsumerWidget {
            ),
          ),
           TextButton(onPressed: (){
-            //ref.read(loginScreenProvider).firebaseService.logOut();
             FirebaseAuth.instance.signOut();
             Navigator.pop(context);
           }
