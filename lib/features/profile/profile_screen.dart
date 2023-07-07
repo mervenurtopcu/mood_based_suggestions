@@ -7,6 +7,8 @@ import 'package:mood_based_suggestions/product/constants/color_constants.dart';
 import 'package:mood_based_suggestions/product/theme/index.dart';
 import 'package:mood_based_suggestions/product/widget/button/authentication_button.dart';
 
+import '../../product/constants/text_style.dart';
+
 
 
 class ProfileScreen extends ConsumerStatefulWidget {
@@ -118,11 +120,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               onPressed: () {
                 ref.read(profileScreenProvider).deleteProfilePhoto(context);
               },
-              child: const Text('Delete Profile Photo',style: TextStyle(color: ColorConstants.loginSubtitle),),),
+              child: const Text('Delete Profile Photo',style:CustomTextYsabeauInfant.nameOfTextStyle, /*TextStyle(color: ColorConstants.loginSubtitle),*/),),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.02,
             ),
-            Text(currentFirebaseUser?.email ?? '',style: TextStyle(color: ref.watch(settingsProvider).isDarkTheme ? ColorConstants.white : ColorConstants.black),),
+            Text(currentFirebaseUser?.email ?? '',style: TextStyle(color: ref.watch(settingsProvider).isDarkTheme ? ColorConstants.white : ColorConstants.black, fontFamily: 'YsabeauInfant', fontSize: 16),),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.06,
             ),

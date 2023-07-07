@@ -32,7 +32,7 @@ class SideMenu extends ConsumerWidget {
                   const SizedBox(width: 10),
                   Text(
                     StringConstants.drawerHeader,
-                    style: TextStyle(color: ref.watch(settingsProvider).isDarkTheme ? ColorConstants.white: ColorConstants.black, fontSize: 16),
+                    style: TextStyle(color: ref.watch(settingsProvider).isDarkTheme ? ColorConstants.white: ColorConstants.black, fontSize: 18, fontFamily: 'YsabeauInfant',),
                   ),
                 ],
               ),
@@ -62,7 +62,7 @@ class SideMenu extends ConsumerWidget {
                  mainAxisAlignment: MainAxisAlignment.start,
                  children: [
                    Icon(Icons.dark_mode,color: ref.watch(settingsProvider).isDarkTheme ? ColorConstants.white : ColorConstants.black,),
-                   Text(StringConstants.drawerSwitchButton,style: TextStyle(color: ref.watch(settingsProvider).isDarkTheme ? ColorConstants.white : ColorConstants.black,fontSize: 16),),
+                   Text(StringConstants.drawerSwitchButton,style: TextStyle(color: ref.watch(settingsProvider).isDarkTheme ? ColorConstants.white : ColorConstants.black,fontSize: 18,fontFamily: 'YsabeauInfant',),),
 
                  ],
                ),
@@ -91,7 +91,7 @@ class SideMenu extends ConsumerWidget {
             FirebaseAuth.instance.signOut();
             Navigator.pop(context);
           }
-              , child: Text('Logout',style: TextStyle(color: ref.watch(settingsProvider).isDarkTheme ? ColorConstants.white : ColorConstants.black,fontSize: 16),)),
+              , child: Text('Logout',style: TextStyle(color: ref.watch(settingsProvider).isDarkTheme ? ColorConstants.white : ColorConstants.black,fontSize: 18,fontFamily: 'YsabeauInfant',),)),
 
         ],
       ),
