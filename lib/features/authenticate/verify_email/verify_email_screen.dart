@@ -4,9 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:mood_based_suggestions/product/app_states/bottom_navigation_bar.dart';
 import 'package:mood_based_suggestions/product/constants/index.dart';
-import 'package:mood_based_suggestions/product/theme/index.dart';
-
-import '../../../product/constants/color_constants.dart';
+import 'package:mood_based_suggestions/product/services/firebase_auth_service.dart';
 import '../../../product/global/utils.dart';
 
 class VerifyEmailScreen extends ConsumerStatefulWidget {
@@ -20,14 +18,16 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
   bool isEmailVerified = false;
   bool canResendEmail = false;
   Timer? timer;
+  final FirebaseAuthService _firebaseService = FirebaseAuthService.instance!;
 
   @override
   void initState() {
     super.initState();
-    isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
+
+    isEmailVerified = _firebaseService.currentUser!.emailVerified;
 
     if (!isEmailVerified) {
-      sendVerifivationEmail();
+      sendVerificationEmail();
 
       timer = Timer.periodic(const Duration(seconds: 3), (_) => checkEmailVerified());
     }
@@ -47,10 +47,9 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
     if (isEmailVerified) timer?.cancel();
   }
 
-  Future sendVerifivationEmail() async {
+  Future sendVerificationEmail() async {
     try {
-      final user = FirebaseAuth.instance.currentUser!;
-      await user.sendEmailVerification();
+      await _firebaseService.sendEmailVerify();
       setState(() => canResendEmail = false);
       await Future.delayed(const Duration(seconds: 5));
       setState(() => canResendEmail = true);
@@ -78,12 +77,12 @@ class _VerifyEmailScreenState extends ConsumerState<VerifyEmailScreen> {
                 ),
                 const SizedBox(height: 24),
                 ElevatedButton(
-                  onPressed: canResendEmail ? sendVerifivationEmail : null,
+                  onPressed: canResendEmail ? sendVerificationEmail : null,
                   child: const Text(StringConstants.emailResentEmail),
                 ),
                 const SizedBox(height: 8),
                 TextButton(
-                  onPressed: () => FirebaseAuth.instance.signOut(),
+                  onPressed: () => _firebaseService.logOut(),
                   child: const Text(
                     StringConstants.emailVerificationCancelButton,
                     style: TextStyle(fontSize: 24 ),
