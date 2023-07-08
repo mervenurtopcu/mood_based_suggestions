@@ -1,8 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mood_based_suggestions/product/app_states/index.dart';
 import '../constants/index.dart';
+import '../services/firebase_auth_service.dart';
 import '../theme/theme_provider.dart';
 
 
@@ -13,6 +13,8 @@ class SideMenu extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context,WidgetRef ref) {
+    final FirebaseAuthService _firebaseAuthService = FirebaseAuthService.instance!;
+
     return Drawer(
       child: ListView(
         children: [
@@ -88,7 +90,7 @@ class SideMenu extends ConsumerWidget {
             endIndent: 10,
           ),
           TextButton(onPressed: (){
-            FirebaseAuth.instance.signOut();
+            _firebaseAuthService.logOut();
             Navigator.pop(context);
           }
               , child: Text('Logout',style: TextStyle(color: ref.watch(settingsProvider).isDarkTheme ? ColorConstants.white : ColorConstants.black,fontSize: 18,fontFamily: 'YsabeauInfant',),)),

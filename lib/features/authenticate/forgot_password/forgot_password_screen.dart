@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:mood_based_suggestions/product/constants/index.dart';
+import 'package:mood_based_suggestions/product/services/firebase_auth_service.dart';
 import 'package:mood_based_suggestions/product/widget/text/authentication_subtitle.dart';
 import 'package:mood_based_suggestions/product/widget/text/authentication_title.dart';
 import 'package:mood_based_suggestions/product/widget/text_form_field/authentication_text_form_field.dart';
@@ -21,6 +22,7 @@ class ForgotPasswordScreen extends ConsumerStatefulWidget {
 class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
   final formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
+  FirebaseAuthService firebaseService = FirebaseAuthService.instance!;
 
   @override
   void dispose() {
@@ -109,8 +111,7 @@ class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
               ),
             ));
     try {
-      await FirebaseAuth.instance
-          .sendPasswordResetEmail(email: emailController.text.trim());
+      firebaseService.resetPassword(email: emailController.text.trim());
       Utils.showSnackBar(StringConstants.utilsSnackBarText);
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     } on FirebaseAuthException catch (e) {

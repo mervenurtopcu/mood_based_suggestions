@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mood_based_suggestions/product/constants/index.dart';
+import 'package:mood_based_suggestions/product/services/firebase_auth_service.dart';
 import 'package:mood_based_suggestions/product/widget/button/authentication_button.dart';
 import 'package:mood_based_suggestions/product/widget/text/authentication_subtitle.dart';
 import 'package:mood_based_suggestions/product/widget/text/authentication_title.dart';
@@ -64,6 +65,7 @@ class LoginWidget extends ConsumerStatefulWidget {
 class _LoginWidgetState extends ConsumerState<LoginWidget> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final FirebaseAuthService firebaseService = FirebaseAuthService.instance!;
 
   @override
   void dispose() {
@@ -166,7 +168,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
             flex: 1,
             child: Center(
               child: AuthButton(
-                onPressed: signIn,
+                onPressed: _signIn,
                 isDarkTheme: ref.watch(settingsProvider).isDarkTheme,
                 text: StringConstants.loginScreenLoginButton,
               ),
@@ -201,7 +203,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
     );
   }
 
-  Future signIn() async {
+  Future _signIn() async {
     showDialog(
         context: context,
         barrierDismissible: false,
@@ -210,14 +212,7 @@ class _LoginWidgetState extends ConsumerState<LoginWidget> {
                 color: Colors.white,
               ),
             ));
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim());
-    } on FirebaseAuthException catch (e) {
-      print(e);
-      Utils.showSnackBar(e.message);
-    }
+    firebaseService.signIn(email: emailController.text.trim(), password: passwordController.text.trim());
     navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 }
