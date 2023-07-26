@@ -14,7 +14,7 @@ class ColorConstants {
   static const Color loginLightBackground = Color(0xfffafafa);
   static const Color loginTextFieldFocus = Color(0xff0ff5e3);
   static const Color transparent = Colors.transparent;
-  static const Color bottomNavBarUnselectedItem = Color(0xFF393939);
+  static const Color bottomNavBarUnselectedItem = Color(0xFF575050);
   static const Color darkGray = Color(0xFF272727);
   static const Color drawerLight =Color(0xFFf8f6fb);
 

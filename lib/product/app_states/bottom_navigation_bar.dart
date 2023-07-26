@@ -61,7 +61,20 @@ class _BottomNavBarState extends ConsumerState<BottomNavBar> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+          backgroundColor:  ref.watch(settingsProvider).isDarkTheme ? ColorConstants.loginTextFieldFocus : ColorConstants.loginLightButton,
+         // shape: const CircleBorder(),
+          mini: true,
+          onPressed: () {},
+          child:  Icon(
+            Icons.emoji_emotions_outlined,
+            color:  ref.watch(settingsProvider).isDarkTheme ? ColorConstants.black : ColorConstants.white,
+          ),
+        ),
+      bottomNavigationBar:
+      BottomNavigationBar(
+        type: BottomNavigationBarType.shifting,
         currentIndex: navIndex.index,
         onTap: (index) {
           ref.read(navProvider.notifier).updateIndex(index);
@@ -80,6 +93,7 @@ class _BottomNavBarState extends ConsumerState<BottomNavBar> {
               icon: Icon(Icons.person),
               label: StringConstants.bottomNavBarProfile),
         ],
+
       ),
     );
   }

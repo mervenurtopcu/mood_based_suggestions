@@ -28,6 +28,11 @@ class DarkTheme {
       selectedItemColor: ColorConstants.white,
       unselectedItemColor: ColorConstants.bottomNavBarUnselectedItem,
     ),
+    switchTheme: SwitchThemeData(
+      thumbColor: MaterialStateProperty.all<Color>(ColorConstants.loginTextFieldFocus),
+      trackColor: MaterialStateProperty.all<Color>(ColorConstants.loginSubtitle),
+      overlayColor: MaterialStateProperty.all<Color>(ColorConstants.loginTextFieldFocus)
+    ),
     drawerTheme: const DrawerThemeData(
       endShape: StadiumBorder(),
       backgroundColor: ColorConstants.darkGray,
